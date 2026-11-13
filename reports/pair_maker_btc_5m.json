@@ -1,0 +1,222 @@
+{
+  "blocks": {
+    "train": [
+      "2026-08-13",
+      "2026-10-29",
+      4772
+    ],
+    "valid": [
+      "2026-10-30",
+      "2026-11-06",
+      1503
+    ],
+    "exam": [
+      "2026-11-07",
+      "2026-11-11",
+      1424
+    ]
+  },
+  "left_out": {
+    "recording quality": 193,
+    "no final result": 380
+  },
+  "versions": [
+    {
+      "params": {
+        "pair_max": 0.94,
+        "shares": 10,
+        "max_ratio": 1.3,
+        "budget": 300
+      },
+      "train_net": -15038.509535104939,
+      "train_roi_net": -0.023697686112389253,
+      "valid_net": -4823.6260501189445,
+      "valid_roi_net": -0.02443693748299119
+    },
+    {
+      "params": {
+        "pair_max": 0.94,
+        "shares": 10,
+        "max_ratio": 2.0,
+        "budget": 300
+      },
+      "train_net": -16118.627408688826,
+      "train_roi_net": -0.02416145258933082,
+      "valid_net": -5262.002631887667,
+      "valid_roi_net": -0.02502366668037813
+    },
+    {
+      "params": {
+        "pair_max": 0.94,
+        "shares": 20,
+        "max_ratio": 1.3,
+        "budget": 600
+      },
+      "train_net": -34627.52037814311,
+      "train_roi_net": -0.024514339369802605,
+      "valid_net": -11964.00617974473,
+      "valid_roi_net": -0.02591088693269196
+    },
+    {
+      "params": {
+        "pair_max": 0.94,
+        "shares": 20,
+        "max_ratio": 2.0,
+        "budget": 600
+      },
+      "train_net": -37529.4018067528,
+      "train_roi_net": -0.025065784885272068,
+      "valid_net": -12698.486119646333,
+      "valid_roi_net": -0.025937561766211707
+    },
+    {
+      "params": {
+        "pair_max": 0.97,
+        "shares": 10,
+        "max_ratio": 1.3,
+        "budget": 300
+      },
+      "train_net": -20614.688504989557,
+      "train_roi_net": -0.02380662317889242,
+      "valid_net": -7096.602658907642,
+      "valid_roi_net": -0.02569672014068903
+    },
+    {
+      "params": {
+        "pair_max": 0.97,
+        "shares": 10,
+        "max_ratio": 2.0,
+        "budget": 300
+      },
+      "train_net": -22377.32661296538,
+      "train_roi_net": -0.024339711449190223,
+      "valid_net": -7311.080442269245,
+      "valid_roi_net": -0.025114145279233724
+    },
+    {
+      "params": {
+        "pair_max": 0.97,
+        "shares": 20,
+        "max_ratio": 1.3,
+        "budget": 600
+      },
+      "train_net": -45473.6158716006,
+      "train_roi_net": -0.02462716930597612,
+      "valid_net": -15626.880243014788,
+      "valid_roi_net": -0.02631329562753718
+    },
+    {
+      "params": {
+        "pair_max": 0.97,
+        "shares": 20,
+        "max_ratio": 2.0,
+        "budget": 600
+      },
+      "train_net": -47838.185373442364,
+      "train_roi_net": -0.024375958003020944,
+      "valid_net": -16582.02918642544,
+      "valid_roi_net": -0.02625274838183271
+    },
+    {
+      "params": {
+        "pair_max": 1.0,
+        "shares": 10,
+        "max_ratio": 1.3,
+        "budget": 300
+      },
+      "train_net": -31603.299772770522,
+      "train_roi_net": -0.026427402616046737,
+      "valid_net": -10175.318944623494,
+      "valid_roi_net": -0.026804213186721503
+    },
+    {
+      "params": {
+        "pair_max": 1.0,
+        "shares": 10,
+        "max_ratio": 2.0,
+        "budget": 300
+      },
+      "train_net": -33003.70857257451,
+      "train_roi_net": -0.026510649324796548,
+      "valid_net": -11021.687974850325,
+      "valid_roi_net": -0.027685269369989732
+    },
+    {
+      "params": {
+        "pair_max": 1.0,
+        "shares": 20,
+        "max_ratio": 1.3,
+        "budget": 600
+      },
+      "train_net": -65273.8317622912,
+      "train_roi_net": -0.0265791415242232,
+      "valid_net": -21204.746488386743,
+      "valid_roi_net": -0.02723194043433616
+    },
+    {
+      "params": {
+        "pair_max": 1.0,
+        "shares": 20,
+        "max_ratio": 2.0,
+        "budget": 600
+      },
+      "train_net": -71937.9828479056,
+      "train_roi_net": -0.028196345948070533,
+      "valid_net": -23897.056877271738,
+      "valid_roi_net": -0.02936123425570619
+    }
+  ],
+  "shortlist": [
+    0,
+    1,
+    4
+  ],
+  "chosen": 0,
+  "exam": {
+    "markets": 1424,
+    "entered": 1424,
+    "spent": 200769.680418319,
+    "avg_spend": 140.98994411398806,
+    "gross": -4444.168210851031,
+    "roi_gross": -0.022135654156500456,
+    "fees": 0.0,
+    "net": -4444.168210851031,
+    "roi_net": -0.022135654156500456,
+    "net_rebate": -4444.168210851031,
+    "roi_net_rebate": -0.022135654156500456,
+    "won": 106,
+    "lost": 1294,
+    "days": 5,
+    "days_up": 0,
+    "worst_stretch": 4445.068210851023,
+    "worst_x_spend": 31.527554952835914,
+    "best_day_share": null
+  },
+  "exam_prints_only": {
+    "markets": 1424,
+    "entered": 1424,
+    "spent": 229086.9845629807,
+    "avg_spend": 160.87569140658758,
+    "gross": -5161.20328078469,
+    "roi_gross": -0.022529447889108555,
+    "fees": 0.0,
+    "net": -5161.20328078469,
+    "roi_net": -0.022529447889108555,
+    "net_rebate": -5161.20328078469,
+    "roi_net_rebate": -0.022529447889108555,
+    "won": 106,
+    "lost": 1304,
+    "days": 5,
+    "days_up": 0,
+    "worst_stretch": 5161.203280784686,
+    "worst_x_spend": 32.08193379409056,
+    "best_day_share": null
+  },
+  "exam_per_day": {
+    "2026-11-07": -900.54,
+    "2026-11-08": -888.79,
+    "2026-11-09": -973.28,
+    "2026-11-10": -775.74,
+    "2026-11-11": -905.82
+  }
+}

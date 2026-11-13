@@ -10,6 +10,7 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "numpy>=1.26",
+    "pandas>=2.2",
     "aiohttp>=3.9",
     "requests>=2.31",
     "tzdata>=2025.1",
@@ -19,7 +20,7 @@ dependencies = [
 pmlab = "pmlab.cli:main"
 
 [project.optional-dependencies]
-research = ["matplotlib>=3.8", "pandas>=2.2", "jupyter>=1.0"]
+research = ["matplotlib>=3.8", "jupyter>=1.0"]
 dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.6", "mypy>=1.11"]
 
 [tool.hatch.build.targets.wheel]
