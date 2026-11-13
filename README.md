@@ -26,3 +26,5 @@ pmlab record btc_5m         # record every BTC 5-minute market into ./data/btc_5
 | `pmlab.ingestion` | One recorder for every market family (`recorder`, families in `pmlab/config/markets.toml`), order-book sync from WebSocket events (`stream_capture`), the recorded-market object (`tracked_market`), Data API v2 client (`data_api`) |
 | `pmlab.data` | Research-window filter (`dataset_policy`), as-of per-second book loader (`loaders`), recording-quality audit (`quality`) |
 | `pmlab.features` | Price state (`price_state`) and causal per-second market features (`book_features`) |
+| `pmlab.backtest` | Event-by-event replay with a queue-position model for resting orders (`resting_engine`), fees (`fees`) |
+| `pmlab.strategies` | The strategy interface (`base`) and a demo strategy, the textbook two-sided pair maker (`pair_maker`) |
