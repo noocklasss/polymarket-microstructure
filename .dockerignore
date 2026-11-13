@@ -1,0 +1,7 @@
+# Only what the image needs is sent to Docker: no recordings, venvs, secrets or caches.
+*
+!pyproject.toml
+!README.md
+!src/
+**/__pycache__
+**/*.pyc

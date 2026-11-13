@@ -1,5 +1,8 @@
 # polymarket-microstructure
 
+[![CI](https://github.com/noocklasss/polymarket-microstructure/actions/workflows/ci.yml/badge.svg)](https://github.com/noocklasss/polymarket-microstructure/actions/workflows/ci.yml)
+![Python 3.12 | 3.13](https://img.shields.io/badge/python-3.12%20%7C%203.13-blue)
+
 Tools to record the order books of Polymarket's 5- and 15-minute crypto "Up or Down" markets, check the recordings,
 and test trading strategies on them honestly: with no look-ahead, a queue-position fill model and a time-ordered exam on
 markets the strategy has never seen.
@@ -71,6 +74,15 @@ Record live markets (Ctrl+C to stop):
 .venv/bin/pmlab record btc_5m         # every BTC 5-minute market, into ./data/btc_5m_data/
 ```
 
+Or run the recorder in Docker, with no Python setup (recordings land in `./data` on your machine):
+
+```bash
+docker build -t pmlab .
+mkdir -p data                         # create it yourself, or Docker creates it owned by root
+docker run -d --name btc_5m --restart unless-stopped -v "$PWD/data:/app/data" pmlab record btc_5m
+docker logs -f btc_5m
+```
+
 Rerun the full study (needs your own recordings and a file of final results; about 10 minutes on 6 cores):
 
 ```bash
@@ -88,6 +100,8 @@ reports/                the pair-maker write-up, chart, and every number behind 
 notebooks/              a walkthrough of one market
 data/sample/            4 recorded markets and their results (data/README.md describes the file format)
 tests/                  unit tests, including one that the sample reproduces the study's numbers exactly
+Dockerfile              the recorder in a container (runs as a normal user, data in a mounted folder)
+.github/workflows/      CI: lint and tests on Python 3.12 and 3.13, and a build and smoke test of the image
 ```
 
 ## Choices worth knowing
