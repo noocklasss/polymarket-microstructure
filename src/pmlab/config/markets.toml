@@ -1,0 +1,81 @@
+# Market families the recorder knows. One recorder process records one family:  pmlab record btc_5m
+#
+# slug_prefix   the coin as Polymarket writes it in market slugs: <slug_prefix>-updown-<timeframe>-<unix start>
+# timeframe     5m, 15m or 1h
+#
+# Any [defaults] key can be overridden per family:
+# heartbeat_seconds   while the WebSocket is connected, re-write both books every N seconds, so a quiet (already decided)
+#                     market still has fresh rows to its end. 0 turns it off.
+# tail_seconds        keep writing snapshots this many seconds after the market's end time
+# full_snapshots      add each side's top-5 book state to the 1-second snapshot rows
+# slots_ahead         how many upcoming markets to look up in advance (current one included)
+
+[defaults]
+heartbeat_seconds = 5
+tail_seconds = 55
+full_snapshots = true
+slots_ahead = 3
+
+[families.btc_5m]
+slug_prefix = "btc"
+timeframe = "5m"
+
+[families.eth_5m]
+slug_prefix = "eth"
+timeframe = "5m"
+
+[families.sol_5m]
+slug_prefix = "sol"
+timeframe = "5m"
+
+[families.xrp_5m]
+slug_prefix = "xrp"
+timeframe = "5m"
+
+[families.doge_5m]
+slug_prefix = "doge"
+timeframe = "5m"
+
+[families.bnb_5m]
+slug_prefix = "bnb"
+timeframe = "5m"
+
+[families.btc_15m]
+slug_prefix = "btc"
+timeframe = "15m"
+
+[families.eth_15m]
+slug_prefix = "eth"
+timeframe = "15m"
+
+[families.sol_15m]
+slug_prefix = "sol"
+timeframe = "15m"
+
+[families.xrp_15m]
+slug_prefix = "xrp"
+timeframe = "15m"
+
+[families.doge_15m]
+slug_prefix = "doge"
+timeframe = "15m"
+
+[families.bnb_15m]
+slug_prefix = "bnb"
+timeframe = "15m"
+
+[families.gold_15m]
+slug_prefix = "xau"
+timeframe = "15m"
+
+[families.gold_1h]
+slug_prefix = "xau"
+timeframe = "1h"
+
+[families.silver_15m]
+slug_prefix = "xag"
+timeframe = "15m"
+
+[families.silver_1h]
+slug_prefix = "xag"
+timeframe = "1h"

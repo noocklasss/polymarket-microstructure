@@ -1,0 +1,41 @@
+# Secrets: never commit
+.env
+.env.*
+!.env.example
+WALLET_ADDRESS.txt
+*.pem
+*.key
+
+# Recorded data (only the small sample and the data README are tracked)
+data/*
+!data/README.md
+!data/sample/
+
+# Logs, caches, scratch
+logs/
+.tmp/
+*.log
+*.ndjson
+!data/sample/**/*.ndjson
+*.pkl
+*.npz
+*.joblib
+
+# Python
+.venv*/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Notebooks and editors
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
