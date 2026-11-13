@@ -13,6 +13,7 @@ data/*
 
 # Logs, caches, scratch
 logs/
+warehouse/
 .tmp/
 *.log
 *.ndjson

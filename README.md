@@ -23,11 +23,14 @@ flowchart LR
     Q --> E["event replay<br>queue + latency + fees"]
     S["strategy"] --> E
     E --> C["time-ordered split<br>report card"]
+    F --> P["pmlab pipeline<br>Parquet by family / day"]
+    P --> D["DuckDB SQL models<br>+ data checks"]
 ```
 
 | Part | What it does |
 |---|---|
 | **Recording** (`pmlab.ingestion`) | One recorder for 16 market families (6 coins x 5m / 15m, plus gold and silver 15m / 1h). It looks up each market before it opens, keeps both order books in sync from WebSocket events (rebuilding from a REST snapshot after a gap), and writes one NDJSON file per market: every book change, every trade, and a 5-level snapshot each second. |
+| **Pipeline** (`pmlab.pipeline`) | Incremental extract of the recordings into Parquet (one file per table, family and day; only new or changed days are rebuilt), SQL models in DuckDB (per-second books, per-market and per-day summaries) and SQL data checks that fail the run. See [below](#data-pipeline). |
 | **Data checks** (`pmlab.data`) | A fixed research window (markets from Aug 1, 2026), only final results count (payouts exactly 1 / 0), a quality audit that drops recordings with stale books, and an as-of per-second book array built only from messages received up to that second. |
 | **Features** (`pmlab.features`) | Causal per-second market features. A test changes the future of a recording and checks that no past value moves. |
 | **Backtest** (`pmlab.backtest`) | Event-by-event replay for resting orders: place / cancel / take latency, position in the queue, fills from trade prints or when the ask comes down to the bid, the taker fee. Plus the time-ordered train / validation / exam split and a report card. |
@@ -63,7 +66,7 @@ git clone https://github.com/noocklasss/polymarket-microstructure.git
 cd polymarket-microstructure
 python3 -m venv .venv
 .venv/bin/pip install -e ".[dev,research]"
-.venv/bin/pytest                      # 89 tests, a few seconds
+.venv/bin/pytest                      # 98 tests, a few seconds
 .venv/bin/jupyter lab notebooks/      # the walkthrough of one market
 ```
 
@@ -89,6 +92,36 @@ Rerun the full study (needs your own recordings and a file of final results; abo
 .venv/bin/python experiments/pair_maker_btc_5m.py --data-dir data --outcomes outcomes.json
 .venv/bin/python experiments/crosscheck_pair_maker.py --data-dir data --outcomes outcomes.json
 ```
+
+## Data pipeline
+
+Raw recordings are good for replaying a market, not for asking questions across thousands of them. `pmlab pipeline`
+turns them into a small SQL warehouse:
+
+```bash
+.venv/bin/pmlab pipeline --data-dir data --warehouse warehouse --outcomes outcomes.json
+.venv/bin/pmlab sql "SELECT day, markets, with_result, round(volume_usd) AS usd, median_coverage FROM daily_summary"
+```
+
+1. **Extract** (Python): each recording is read once and split into five Parquet tables (`markets`, `trades`, `book`,
+   `snapshots`, `resyncs`), one file per table, market family and New York day. A manifest remembers which recordings
+   built each day, so a rerun only rebuilds days that changed, and markets still in progress wait for the next run.
+   Files are written under a temporary name and renamed, so a crash never leaves half a day behind.
+2. **Models** (SQL, [`src/pmlab/pipeline/sql/models`](src/pmlab/pipeline/sql/models)): `markets` joined to final
+   results; `book_seconds`, the as-of top of book for every second of every market, built with an `ASOF JOIN`;
+   `market_summary` (trades, volume, VWAP, how much of the market both books were fresh) and `daily_summary`.
+3. **Checks** (SQL, [`src/pmlab/pipeline/sql/checks`](src/pmlab/pipeline/sql/checks)): each is a query that returns
+   the rows breaking a rule. `error` checks (duplicate markets, a market from before the research window, impossible
+   trade prices, a recording without its market description) fail the run; `warn` checks (missing results, gaps in a
+   recording, cut-off lines) are reported.
+
+`book_seconds` is tested to be identical, value for value, to the Python loader the backtests use, so research done in
+SQL and research done in Python see the same market.
+
+On the BTC 5-minute recordings (17 GB of NDJSON, Aug 13 - Nov 13, 2026) a full build takes **under 2 minutes** on 4
+cores and gives a **1.1 GB** warehouse: 8,398 markets on 41 recorded days, 12.2 million trades, 28.5 million book
+changes, and 5.0 million market-seconds in `book_seconds`. All error checks pass; the coverage warning flags 891
+recordings with gaps.
 
 ## Repository layout
 
