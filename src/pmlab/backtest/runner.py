@@ -15,6 +15,7 @@ import pandas as pd
 
 from pmlab.backtest.resting_engine import EngineConfig, load_events, run_market
 from pmlab.data.dataset_policy import eligible
+from pmlab.data.files import market_slug
 from pmlab.data.outcomes import winner_of
 from pmlab.data.quality import audit_log
 
@@ -38,7 +39,7 @@ def _init(outcomes: dict) -> None:
 
 
 def _run(job: Job) -> dict:
-    if not eligible(job.path.stem):
+    if not eligible(market_slug(job.path)):
         return {"start": job.start, "skip": "before the research window"}
     if job.check_quality:
         try:
@@ -59,7 +60,9 @@ def _run(job: Job) -> dict:
 
 
 def market_files(data_dir: Path, family_dir: str) -> dict[int, Path]:
-    return {int(p.stem.rsplit("-", 1)[1]): p for p in (Path(data_dir) / family_dir).glob("*-updown-*.ndjson")}
+    folder = Path(data_dir) / family_dir
+    paths = [*folder.glob("*-updown-*.ndjson"), *folder.glob("*-updown-*.ndjson.gz")]
+    return {int(market_slug(p).rsplit("-", 1)[1]): p for p in paths}
 
 
 def run_many(

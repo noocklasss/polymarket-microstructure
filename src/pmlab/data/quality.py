@@ -8,6 +8,7 @@ from pathlib import Path
 
 import numpy as np
 
+from pmlab.data.files import market_slug
 from pmlab.data.loaders import ASK_SIZE, STAMP, load_books, quote_recorded, quote_valid
 
 COIN_NAMES = {"xau": "gold", "xag": "silver"}
@@ -20,7 +21,7 @@ POLICY_RECORDED = "fresh_recording_v2"  # fresh book on both sides; explicitly e
 
 def family_and_duration(path) -> tuple[str, int]:
     """'btc-updown-5m-...' -> ('btc_5m', 300); 'xau-updown-15m-...' -> ('gold_15m', 900)."""
-    stem = Path(path).stem
+    stem = market_slug(path)
     found = SLUG_RE.match(stem)
     if found:
         coin, tf = found.group(1).lower(), found.group(2).lower()
@@ -66,7 +67,7 @@ def audit_log(
     coverage = float(selected.mean())
     no_asks = fresh & np.isfinite(books[:, :, ASK_SIZE]) & (books[:, :, ASK_SIZE] == 0)
     return {
-        "slug": path.stem,
+        "slug": market_slug(path),
         "family": family,
         "duration_seconds": duration,
         "fresh_both_seconds": int(selected.sum()),

@@ -14,6 +14,7 @@ from pathlib import Path
 import numpy as np
 
 from pmlab.data.dataset_policy import eligible, market_start
+from pmlab.data.files import market_slug, open_recording
 
 SIDES = ("UP", "DOWN")
 BOOK_FIELDS = ("bid", "ask", "bid_size", "ask_size", "stamp")
@@ -28,12 +29,13 @@ def load_books(path: Path, preserve_empty: bool = False, duration_seconds: int |
     a valid book is recorded as unknown (NaN).
     """
     path = Path(path)
-    start = market_start(path.stem)
-    if not eligible(path.stem):
+    slug = market_slug(path)
+    start = market_start(slug)
+    if not eligible(slug):
         raise ValueError("Outside the permitted dataset")
     duration = int(duration_seconds or 300)
     meta, events = {}, []
-    with path.open(encoding="utf-8") as handle:
+    with open_recording(path) as handle:
         for line in handle:
             try:
                 row = json.loads(line)

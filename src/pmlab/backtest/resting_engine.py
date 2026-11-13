@@ -25,6 +25,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from pmlab.backtest.fees import taker_fee
+from pmlab.data.files import open_recording
 from pmlab.strategies.base import RestingStrategy
 
 EPS = 1e-9
@@ -56,7 +57,7 @@ def load_events(path: Path, start: int) -> tuple[str | None, list[Event]]:
     """``(condition_id, events)`` from a recording, events sorted by time (books before trades at the same time)."""
     events: list[Event] = []
     condition_id = None
-    with open(path, encoding="utf-8-sig") as handle:
+    with open_recording(path, encoding="utf-8-sig") as handle:
         for line in handle:
             if line.startswith('{"type": "meta"'):
                 condition_id = json.loads(line).get("condition_id")
